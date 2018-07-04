@@ -27,5 +27,9 @@
     "SEARCHES": {
         "search0":["search criteria","module.name of module","case-tag","template","priority","alert title","create case?"],
         "search1":["'noreply@haveibeenpwned.com' in email_from and 'tester' not in subject","feed_monitor","Feed Alert","THREAT CASE","1","Alert from feeds@ alert system","Y"]
+    },
+    "OBSERVABLES":{
+        "remove_observables":["@test.local","@provider.local"]
     }
+
 }
