@@ -145,8 +145,6 @@ def extractbody(email_message):
     body = converted2
     return body, url_array, mail_array
 
-
-
 def process_html(part):
    charset = part.get_content_charset('iso-8859-1')
    body = part.get_payload(decode=True)

@@ -105,7 +105,6 @@ def prepare_case_template(subject,indicatorlevel,emailbody,casetype,tag,template
         hive_api=''.join(settings.stored_api_key[0])
 
         #Define the connection to thehive installation (including the generated API key).
-#        api = TheHiveApi(hive_address, hive_api,None, {'http': '', 'https': ''})
         api = TheHiveApi(hive_address,hive_api,None, {'http': '', 'https': ''})
 
 # Prepare the sample Case based on a Template

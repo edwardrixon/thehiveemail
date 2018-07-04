@@ -23,7 +23,46 @@ import datetime
 import mailbox
 import html2text
 import settings
+import send_email
+
 #import mailparser
+
+def brand_monitor(email_message,subject):
+    #This is to handle any alerts relating to brand monitoring in Domain Tools
+    case_tag="Brand Alert"
+    template_name="" #Dont create a case  
+    print(str(datetime.datetime.now())+"  Processing "+template_name+" with tag "+case_tag)
+    if "Brand Monitor Alert" in subject:
+        alert_title = "Domain Alert-Brand Alert"
+        alert_pri = 2
+    elif "Registrant Monitor Alert" in subject:
+        alert_title= "Domain Alert-Registrant Alert"
+        alert_pri = 1
+    else:
+        alert_title= "Domain Alert-General"
+        alert_pri = 1
+
+    #We arent creating a case so just send an alert
+    body=""
+    create_alert.prepare_alert(subject,alert_pri,body,case_tag,alert_title)
+
+def email_pwned(email_message,subject,email_from,email_to,password):
+    #This is used for any emails picked up from the haveibeenpwned service
+    case_tag="haveibeenpwned.com"
+    template_name="USER INVESTIGATION"
+    alert_pri = 2
+    print(str(datetime.datetime.now())+"  Processing "+template_name+" with tag "+case_tag)
+
+    #We want to automatically create a case for this
+    case_id,simple_id,body = process_autocase(email_message,subject,template_name,case_tag)
+    send_email.send_mailbox(body,simple_id,email_from, email_to, subject,mailbox,password) 
+
+def pastebin_alert(email_message,subject):
+    #This is used for any pastebin alerts.
+    case_tag="Pastebin Alert"
+    template_name=""
+    alert_pri = 2
+    print(str(datetime.datetime.now())+"  Processing "+template_name+" with tag "+case_tag)
 
 def process_autocase(email_message,subject,template_name,case_tag):
     #This process is kicked off when you send a message to the identified mailbox with CASE in the subject

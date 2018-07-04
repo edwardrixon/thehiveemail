@@ -11,6 +11,7 @@ import email
 import datetime
 import send_email
 import settings
+import create_alert
 #import mailparser
 
 def email_process(emails,tag,mailbox,password):
@@ -44,8 +45,9 @@ def email_process(emails,tag,mailbox,password):
         print(str(datetime.datetime.now())+"  Processing "+template_name+" with tag "+case_tag)
         case_id,simple_id,body = modules.process_autocase(email_message,subject,template_name,case_tag)
         send_email.send_mailbox(body,simple_id,email_from, email_to, subject,mailbox,password)
+     
      elif tag=="security":
-        #Process messages from the security mailbox
+        #Process messages from the security mailbox. Case extractions depends on what the subject is etc
         if auto_create_tag in subject:
          #This is just a test, eventually all emails will need an autoresponse
             template_name="AUTOCASE"
@@ -56,16 +58,14 @@ def email_process(emails,tag,mailbox,password):
         elif update_tag in subject:
            modules.update_autocase(email_message,subject)   
         elif "noreply@haveibeenpwned.com" in email_from and "multi-domain" not in subject:
-            case_tag="haveibeenpwned.com"
-            template_name="USER INVESTIGATION"
-            print(str(datetime.datetime.now())+"  Processing "+template_name+" with tag "+case_tag)
-            case_id,simple_id,body = modules.process_autocase(email_message,subject,template_name,case_tag)
-            send_email.send_mailbox(body,simple_id,email_from, email_to, subject,mailbox,password) 
-
-     elif tag=="securityalerts":
-        #Process messages from the security alerts mailbox
-        print("SECURITYALERTS")
-
+            modules.email_pwned(email_message,subject,email_from,email_to,password)
+            send_email.send_mailbox(body,simple_id,email_from, email_to, subject,mailbox,password)
+        elif "domaintools.com" in email_from:
+            modules.brand_monitor(email_message,subject)
+        else:
+            #If it gets to here unset the read flag (so we know whats been read but not processed) - NOT IMPLEMENTED YET
+            #result, email_data = mail.uid('store',latest_email_uid,'-FLAGS','\\Seen')
+            print("")
      else:
         print(str(datetime.datetime.now())+"  No TAGs have been applied to the email")
 
