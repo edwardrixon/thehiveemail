@@ -9,7 +9,9 @@
     "INTERNAL_EMAIL": {
         "server":["test.domain"],
         "own_domain":["@test.local"],
-        "default_recipient":["testaccount@test.local"]
+        "default_recipient":["testaccount@test.local"],
+        "security_team":["security1","security2","security3"],
+        "email_tag_line":["Thankyou for contacting the security helpdesk. Please reply to this email with any further communications."]
     },
     "ATTACHMENTS": {
         "location":["/opt/thehive/attachments"]
@@ -21,5 +23,9 @@
     "TAGS": {
         "auto_create_tag":["ID"],
         "update_tag":["ID NUM:"]
+    },
+    "SEARCHES": {
+        "search0":["search criteria","module.name of module","case-tag","template","priority","alert title","create case?"],
+        "search1":["'noreply@haveibeenpwned.com' in email_from and 'tester' not in subject","feed_monitor","Feed Alert","THREAT CASE","1","Alert from feeds@ alert system","Y"]
     }
 }
