@@ -40,11 +40,15 @@ def email_process(emails,tag,mailbox,password):
      
      if tag=="spam":
         #Process messages from the spam mailbox. These will always create a case, extract attachments etc.
-        template_name="SPAM INVESTIGATION"
-        case_tag="spam"
-        print(str(datetime.datetime.now())+"  Processing "+template_name+" with tag "+case_tag)
-        case_id,simple_id,body = modules.process_autocase(email_message,subject,template_name,case_tag)
-        send_email.send_mailbox(body,simple_id,email_from, email_to, subject,mailbox,password)
+        
+        if update_tag in subject:
+            modules.update_autocase(email_message,subject)
+        else:
+            template_name="SPAM INVESTIGATION"
+            case_tag="spam"
+            print(str(datetime.datetime.now())+"  Processing "+template_name+" with tag "+case_tag)
+            case_id,simple_id,body = modules.process_autocase(email_message,subject,template_name,case_tag)
+            send_email.send_mailbox(body,simple_id,email_from, email_to, subject,mailbox,password)
      
      elif tag=="security":
         #Process messages from the security mailbox. Case extractions depends on what the subject is etc
