@@ -27,19 +27,19 @@ def connect_mailbox(mailbox,imap_password,mail_folder,tag):
    result, email_id = mail.uid('search', None, "UNSEEN") # (ALL/UNSEEN)
  
    if result == 'OK':
-        print(str(datetime.datetime.now())+"  CONNECTED to "+str(username))
+        print('')
    else:
         print(str(datetime.datetime.now())+"  FAILED to CONNECT to "+str(username))
 
    num_emails = len(email_id[0].split())
 
-   print(str(datetime.datetime.now())+"  Emails Collected from "+str(username)+":"+str(num_emails))
-
+ 
    # Convert the messages into email message object.
 
    email_array = []
 
    if num_emails>0:
+     print(str(datetime.datetime.now())+"  Emails Collected from "+str(username)+":"+str(num_emails))
      for x in range(num_emails):
         latest_email_uid = email_id[0].split()[x]
         #Open the email but as string format

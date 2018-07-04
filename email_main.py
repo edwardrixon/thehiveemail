@@ -9,7 +9,7 @@ import datetime
 def readConfiguration(configfile):
     #global attachment_location, hive_address, hive_api
 
-    print(str(datetime.datetime.now())+"  Using Config: {0}".format(configfile))
+    #print(str(datetime.datetime.now())+"  Using Config: {0}".format(configfile))
 
 	#Read in the configuration file called config.json
     try:
@@ -56,7 +56,8 @@ def readConfiguration(configfile):
 #           process_emails.email_process(emails,tag,attachment_location)
             print("!!!I GOT HERE!!!")
        else:
-            print(str(datetime.datetime.now())+"  No emails to process")
+            #print(str(datetime.datetime.now())+"  No emails to process")
+            print('')
 
 def main(argv):
     configfile = argv
