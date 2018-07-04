@@ -1,0 +1,25 @@
+{
+    "MAILSERVER": {
+        "mailbox0":["test@test.com","password","inbox","test"],
+        "mailbox1":["","","",""],
+        "mailbox2":["","","",""],    
+        "mailbox3":["","","",""],
+        "mailbox4":["","","",""]
+    },
+    "INTERNAL_EMAIL": {
+        "server":["test.domain"],
+        "own_domain":["@test.local"],
+        "default_recipient":["testaccount@test.local"]
+    },
+    "ATTACHMENTS": {
+        "location":["/opt/thehive/attachments"]
+    },
+    "THEHIVE": {
+        "address":["https://theserver:8080"],
+        "apikey":["APIKEY"]
+    },
+    "TAGS": {
+        "auto_create_tag":["ID"],
+        "update_tag":["ID NUM:"]
+    }
+}
