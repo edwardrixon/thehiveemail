@@ -69,3 +69,4 @@ def send_mailbox(email_message,case_id,email_from,email_to,full_subject,mailbox,
 #######################################################
    print(str(datetime.datetime.now())+"  Disconnecting from internal mail server.")
    mail.quit()
+   

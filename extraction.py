@@ -166,4 +166,3 @@ def fix_html_body(charset,body):
    body = body.decode(charset, 'replace')
    body = h.handle(body)
    return body
-   
