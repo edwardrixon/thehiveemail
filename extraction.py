@@ -147,7 +147,10 @@ def process_html(part):
    return body
 
 def html_observables(part):
-   body = part.get_payload(decode=True)
+   #Read in the list of observables
+   remove_observables = ''.join(settings.stored_remove_observables[0])
+
+      body = part.get_payload(decode=True)
    print(str(datetime.datetime.now())+"  Running the url parser.")
    url_array=linkParser(body)
    print(str(datetime.datetime.now())+"  Running the email parser.")
