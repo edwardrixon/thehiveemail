@@ -40,7 +40,6 @@ def email_process(emails,tag,mailbox,password):
         
     #Process messages tagged as spam. These will always create a case, extract attachments etc.
     elif tag=="spam":
-        print("you have hit the spam tag")
         modules.spam(email_message,subject,email_from,email_to,mailbox,password)
 
     #Process messages tagged as security. This will call modules that determines what happens next based on search criteria

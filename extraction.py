@@ -22,19 +22,15 @@ def linkParser(body):
     for link in links:
         if(link.get('href').find('mailto:') > -1):
             test=link.extract()
-            print("TEST VALUE-not mailto:",test)
-            final_links.append(test)
         elif(link.get('href').find('tel:') > -1):
             test=link.extract()
-            print("TEST VALUE-not tel:",test)
-            final_links.append(test)
+        final_links.append(test)
 
 #   Working one
 #    links = [link['href'] for link in soup('a') if 'href' in link.attrs]
 
-
-    print(str(datetime.datetime.now())+"  Urls Extracted:",links)
-    return list(set(links))
+    print(str(datetime.datetime.now())+"  Urls Extracted:",final_links)
+    return list(set(final_links))
 
 def emailParser(body):
     remove_observables = ''.join(settings.stored_remove_email_observables[0])
