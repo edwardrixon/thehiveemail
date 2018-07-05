@@ -25,7 +25,7 @@ def readConfiguration(configfile):
     own_domain = config['INTERNAL_EMAIL']['own_domain'] #The email domain used by the company hosting TheHive
     default_recipient = config['INTERNAL_EMAIL']['default_recipient'] #A default email recipient that will recieve emails
     security_recipients = config['INTERNAL_EMAIL']['security_team'] #The list of recipients in the Security team to recieve emails
-    email_tag_line = config['INTERNAL_EMAIL']['email_tag'] #Standard message that will be included in each email.
+    email_tag_line = config['INTERNAL_EMAIL']['email_tag_line'] #Standard message that will be included in each email.
     remove_observables = config['OBSERVABLES']['remove_observables'] #List of observables to be ignored i.e. your internal email addressess and domains
 
     #Store all of these variables in settings.py so that they can be used for all modules and python programs.
@@ -53,7 +53,7 @@ def readConfiguration(configfile):
         tag=mail_server[3]
 
         #Execute function to read the mailbox and return the email ids, number collected and actual emails
-        email_ids, num_emails, emails = read_mailbox.connect_mailbox(mailbox,password,folder,tag)
+        num_emails, emails = read_mailbox.connect_mailbox(mailbox,password,folder,tag)
 
         
         if num_emails>0:

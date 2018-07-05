@@ -46,4 +46,4 @@ def connect_mailbox(mailbox,imap_password,mail_folder,tag):
         #Removing this to improve flow
         #process_emails.email_process(email_message,tag,mailbox,password)
 
-   return email_id, num_emails, email_message
+   return num_emails, email_message
