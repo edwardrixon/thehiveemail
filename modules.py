@@ -83,7 +83,7 @@ def process_autocase(email_message,subject,template_name,case_tag):
     create_case.prepare_url_observable(id, url_array)
     create_case.prepare_file_observable(id, file_array)
     #file_array = extraction.extractattachments(email_message,attachment_location)
-    return id, simple_id, simple_body
+    return simple_id, simple_body
 
 def update_autocase(email_message,subject):
     update_tag=''.join(settings.stored_update_tag[0])

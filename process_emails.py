@@ -15,24 +15,20 @@ def email_process(emails,tag,mailbox,password):
      auto_create_tag=''.join(settings.stored_auto_create_tag[0])
      email_message = emails
 
-     #Extract the Date
-     date_tuple = email.utils.parsedate_tz(emails['Date'])
+
+     #Extract the Date -Not used yet
+     #date_tuple = email.utils.parsedate_tz(emails['Date'])
      #date_tuple = raw_email.date
 
-     if date_tuple:
-        local_date = datetime.datetime.fromtimestamp(email.utils.mktime_tz(date_tuple))
-        local_message_date = "%s" %(str(local_date.strftime("%a, %d %b %Y %H:%M:%S")))
+     #if date_tuple:
+     #   local_date = datetime.datetime.fromtimestamp(email.utils.mktime_tz(date_tuple))
+     #   local_message_date = "%s" %(str(local_date.strftime("%a, %d %b %Y %H:%M:%S")))
 
      #Common Extractions for all discovered emails to be searched on
      email_from = str(email.header.make_header(email.header.decode_header(email_message['From'])))
      email_to = str(email.header.make_header(email.header.decode_header(email_message['To'])))
-     #email_to = raw_email.to
-     #print(email_to)
-     subject, encoding = decode_header(email_message.get('subject'))[0]
-     #subject = raw_email.subject
-     #print(subject)
-     #print("Encoding for subject is :", encoding)
-     
+     subject = decode_header(email_message.get('subject'))[0]
+
      if tag=="spam":
         #Process messages from the spam mailbox. These will always create a case, extract attachments etc.
         
@@ -42,7 +38,7 @@ def email_process(emails,tag,mailbox,password):
             template_name="SPAM INVESTIGATION"
             case_tag="spam"
             print(str(datetime.datetime.now())+"  Processing "+template_name+" with tag "+case_tag)
-            case_id,simple_id,body = modules.process_autocase(email_message,subject,template_name,case_tag)
+            simple_id,body = modules.process_autocase(email_message,subject,template_name,case_tag)
             send_email.send_mailbox(body,simple_id,email_from, email_to, subject,mailbox,password)
      
      elif tag=="security":
