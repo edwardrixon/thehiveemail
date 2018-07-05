@@ -44,23 +44,22 @@ def extractattachments(message):
         pathList = []
 
         for part in message.walk():
-            if part.get_content_maintype() == 'multipart': continue
-            if part.get('Content-Disposition') is None: continue
-
-            save_path = attachment_location
-            filename = part.get_filename()
-            print(str(datetime.datetime.now())+"  Extracting File:"+str(filename))
-            completePath = os.path.join(save_path, filename)
-            pathList.append(completePath)
-#           print (completePath)
-            fb = open(completePath,'wb')
+            if part.get('Content-Disposition') is not None:      
+                if part.get_content_maintype() == 'multipart': 
+                    save_path = attachment_location
+                    filename = part.get_filename()
+                    print(str(datetime.datetime.now())+"  Extracting File:"+str(filename))
+                    completePath = os.path.join(save_path, filename)
+                    pathList.append(completePath)
+#                   print (completePath)
+                    fb = open(completePath,'wb')
         
-            fb.write(part.get_payload(decode=True))
-            fb.close()
-            return pathList
-        else:
-            print("Not Multipart...bypassing")
-            pathList=""
+                    fb.write(part.get_payload(decode=True))
+                    fb.close()
+                    return pathList
+            else:
+                print("Not Multipart...bypassing")
+                pathList=""
     return pathList
 
 def extractbody(email_message):
@@ -105,8 +104,6 @@ def extractbody(email_message):
           elif part.get_content_type() == "text/plain" and 'attachment' not in str(part.get('Content-Disposition')):
              print (str(datetime.datetime.now())+"  Extracting text/plain body.") 
              body.append(part.get_payload(decode=True))
-          else:
-             print("ITS AN ATTACHMENT SO ITS BEEN SKIPPED")
 
     else:
        print(str(datetime.datetime.now())+"  Single (non-multipart) message detected.")
