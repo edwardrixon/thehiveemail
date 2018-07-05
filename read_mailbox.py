@@ -7,8 +7,6 @@ import datetime
 import email
 import imaplib
 import process_emails
-#from flanker import addresslib
-#from flanker import mime
 
 #Function to connect to the mailbox and retrieve all emails
 def connect_mailbox(mailbox,imap_password,mail_folder,tag):
@@ -25,56 +23,27 @@ def connect_mailbox(mailbox,imap_password,mail_folder,tag):
 
    #Collect all emails that are unread
    result, email_id = mail.uid('search', None, "UNSEEN") # (ALL/UNSEEN)
- 
-   if result == 'OK':
-        print('')
-   else:
+
+   #Display log message if failure to connect
+   if 'OK' not in result:
         print(str(datetime.datetime.now())+"  FAILED to CONNECT to "+str(username))
 
    num_emails = len(email_id[0].split())
-
- 
-   # Convert the messages into email message object.
-
-   email_array = []
 
    if num_emails>0:
      print(str(datetime.datetime.now())+"  Emails Collected from "+str(username)+":"+str(num_emails))
      for x in range(num_emails):
         latest_email_uid = email_id[0].split()[x]
-        #Open the email but as string format
         result, email_data = mail.uid('fetch', latest_email_uid, '(RFC822)')
         raw_email = email_data[0][1]
+
+        #Need to revised this bit?#
         raw_email_string = raw_email.decode('utf-8').strip()
         email_message = email.message_from_string(raw_email_string)
-        #TESTER
-        #msg = mime.from_string(raw_email)
-        #print("HEADERS:",msg.headers.items())
+        ###########################
 
-        #if msg.content_type.is_singlepart():
-        #  msg.body
-        # parts if message is multipart
-        #if msg.content_type.is_multipart():
-        #  msg.parts
-        # enclosed message
-        #if msg.content_type.is_message_container():
-        #  msg.enclosed
-
-        #for part in mail.parts:
-        #  print 'Content-Type: {} Body: {}'.format(part, part.body)
-        #  for part in
-        #print("BODY:",mail.body)
-        #print(mail.enclosed)
-
-        #Decode the string and strip out bad characters.
-        #raw_email_string = raw_email.decode('utf-8').strip()
-        #email_message = email.message_from_string(raw_email_string)
-
-        #Process the email that has been recieved
+        #Call module to process the emails that have been collected
+        #Removing this to improve flow
         #process_emails.email_process(email_message,tag,mailbox,password)
-        process_emails.email_process(email_message,tag,mailbox,password)
 
-   else:
-      email_message=""
-
-   return email_id, num_emails, email_array
+   return email_id, num_emails, email_message

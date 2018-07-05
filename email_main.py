@@ -5,6 +5,7 @@ import json
 import sys, argparse
 import settings
 import datetime
+import process_emails
 
 def readConfiguration(configfile):
 	#Read in the configuration file that is called by email_main. e.g. python email_main.py --config=config.json
@@ -54,11 +55,10 @@ def readConfiguration(configfile):
         #Execute function to read the mailbox and return the email ids, number collected and actual emails
         email_ids, num_emails, emails = read_mailbox.connect_mailbox(mailbox,password,folder,tag)
 
-
+        
         if num_emails>0:
-            #Not entirely sure why this is still here.
-            #process_emails.email_process(emails,tag,attachment_location)
-            print("!!!I GOT HERE!!!")
+            #Moved logic to here to process emails.
+            process_emails.email_process(emails,tag,mailbox,password)
 
 def main(argv):
     configfile = argv
