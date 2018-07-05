@@ -77,7 +77,7 @@ def update_autocase(email_message,subject):
     print(str(datetime.datetime.now())+"  Starting update of existing case.")
     
     #Create a search to find the hive case number
-    revised = re.search(r'[HIVE-CASE#(\w+)', subject)  
+    revised = re.search(r'HIVE-CASE#(\w+)', subject)  
 
     id = revised.group(1) #Extract the real case number
 
