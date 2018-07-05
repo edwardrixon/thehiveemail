@@ -31,7 +31,7 @@ def send_mailbox(email_message,case_id,email_from,email_to,full_subject,mailbox,
    subject = full_subject.replace('[CASE]','')
 
    # Connect to imap server
-   username = mailbox
+   #username = mailbox
    password = password
    #folder = mail_folder
    subject = "[HIVE-CASE#"+str(case_id)+"]:"+subject
@@ -54,7 +54,7 @@ def send_mailbox(email_message,case_id,email_from,email_to,full_subject,mailbox,
        text=msg.as_string()
    except UnicodeEncodeError:
        #Its broken, temporary fix as had enough of the "Encode/Decode Dance of Doom"
-       print("BROKE")
+       print(str(datetime.datetime.now())+"  Encoding gone amok, trying another type.")
        text=msg.as_string()
        
    mail = smtplib.SMTP(mailbox)

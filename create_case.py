@@ -83,6 +83,7 @@ def add_task_log(full_task_id,body,file_array):
         #Later add on file=file_array
         tasklog = CaseTaskLog(message=body, file="")
 
+        #Need to also add some observables to this
         response = api.create_task_log(full_task_id,tasklog)
 
         if response.status_code == 201:
@@ -93,11 +94,9 @@ def add_task_log(full_task_id,body,file_array):
     		sys.exit(0)
 
 def search_case(case_id,body,file_array):
-        full_case_id = find_case_id("Test", Eq('caseId', case_id), 'all', [])
-#        print (full_case_id)
+        full_case_id = find_case_id("CaseSearchQuery", Eq('caseId', case_id), 'all', [])
         full_task_id = find_task_log_id(full_case_id)
-#        print (full_task_id)
-        add_task_log(full_task_id,body,file_array)
+        return full_task_id
 
 
 def prepare_case_template(subject,indicatorlevel,emailbody,casetype,tag,templatename):
@@ -107,15 +106,9 @@ def prepare_case_template(subject,indicatorlevel,emailbody,casetype,tag,template
         #Define the connection to thehive installation (including the generated API key).
         api = TheHiveApi(hive_address,hive_api,None, {'http': '', 'https': ''})
 
-# Prepare the sample Case based on a Template
+        # Prepare the sample Case based on a Template
         print(str(datetime.datetime.now())+"  Preparing the case for "+casetype)
 
-#        print("subject:",subject)
-#        print("indicator:",indicatorlevel)
-#        print("tag:",tag)
-#        print("template:",templatename)
-
-#	sourceRef = str(uuid.uuid4())[0:6]
         case = Case(title=subject,
         	tlp=indicatorlevel,
         	tags=[tag],

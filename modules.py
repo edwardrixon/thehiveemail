@@ -9,6 +9,7 @@ import extraction
 import datetime
 import settings
 import send_email
+import extraction
 
 def spam(email_message,subject,email_from,email_to,mailbox,password):
     #This will handle any message sent to spam
@@ -58,10 +59,9 @@ def pastebin_alert(email_message,subject,email_from,email_to,mailbox,password):
 def process_autocase(email_message,subject,template_name,case_tag,alert_pri,email_from,email_to,mailbox,password):
     #This process is kicked off when you send a message to the identified mailbox with CASE in the subject
     print(str(datetime.datetime.now())+"  Processing auto case creation for "+template_name+" with tag "+case_tag)
-    attachment_location=''.join(settings.stored_attachment_location[0])
     subject = subject.decode('unicode_escape').encode('utf-8')
     body, url_array, mail_array = extraction.extractbody(email_message)
-    file_array = extraction.extractattachments(email_message,attachment_location)
+    file_array = extraction.extractattachments(email_message)
     TemplateName=template_name
     id, simple_id, simple_body = create_case.prepare_case_template(subject,alert_pri,body,"AutoCreated",case_tag,TemplateName)
     create_case.prepare_mail_observable(id, mail_array)
@@ -70,19 +70,27 @@ def process_autocase(email_message,subject,template_name,case_tag,alert_pri,emai
     #file_array = extraction.extractattachments(email_message,attachment_location)
     send_email.send_mailbox(body,simple_id,email_from, email_to, subject,mailbox,password)
 
+#This will add a task to an existing case
 def update_autocase(email_message,subject):
     update_tag=''.join(settings.stored_update_tag[0])
-    #Extract the case number
+    update_tag = "r'"+str(update_tag)+"(\w+)'"
+    print("UPDATE TAG:"+update_tag)
+
     print(str(datetime.datetime.now())+"  Starting update of existing case.")
-    attachment_location=''.join(settings.stored_attachment_location[0])
-    revised = re.search(r'HIVE-CASE#(\w+)', subject)    
-    id = revised.group(1)
+    
+    #Create a search to find the hive case number
+    revised = re.search(r'HIVE-CASE#(\w+)', subject)  
+
+    id = revised.group(1) #Extract the real case number
 
     print(str(datetime.datetime.now())+"  Case number:"+id+" Extracted.")
     body, url_array, mail_array = extraction.extractbody(email_message)
     print(str(datetime.datetime.now())+"  Extracting attachments")
-    file_array = extraction.extractattachments(email_message,attachment_location)
-
+    file_array = extraction.extractattachments(email_message)
+    create_case.prepare_mail_observable(id, mail_array)
+    create_case.prepare_url_observable(id, url_array)
+    create_case.prepare_file_observable(id, file_array)
     #We need to add something to the task called History that we have setup
-    create_case.search_case(id,body,file_array)
+    full_task_id = create_case.search_case(id,body,file_array)
+    create_case.add_task_log(full_task_id,body,file_array)
 
