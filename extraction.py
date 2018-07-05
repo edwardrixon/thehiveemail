@@ -39,6 +39,8 @@ def emailParser(body):
 def extractattachments(message):
     attachment_location=''.join(settings.stored_attachment_location[0])
     print(str(datetime.datetime.now())+"  Starting attachment extraction.") 
+    pathList=""
+    
     if message.is_multipart():
       
         pathList = []

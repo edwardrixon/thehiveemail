@@ -67,7 +67,6 @@ def process_autocase(email_message,subject,template_name,case_tag,alert_pri,emai
     create_case.prepare_mail_observable(id, mail_array)
     create_case.prepare_url_observable(id, url_array)
     create_case.prepare_file_observable(id, file_array)
-    #file_array = extraction.extractattachments(email_message,attachment_location)
     send_email.send_mailbox(body,simple_id,email_from, email_to, subject,mailbox,password)
 
 #This will add a task to an existing case
@@ -79,7 +78,7 @@ def update_autocase(email_message,subject):
     print(str(datetime.datetime.now())+"  Starting update of existing case.")
     
     #Create a search to find the hive case number
-    revised = re.search(r'HIVE-CASE#(\w+)', subject)  
+    revised = re.search(update_tag, subject)  
 
     id = revised.group(1) #Extract the real case number
 

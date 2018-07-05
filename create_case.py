@@ -15,9 +15,9 @@ import email
 import datetime
 import mailbox
 import html2text
-from thehive4py.api import *
+from thehive4py.api import TheHiveApi
 from thehive4py.query import *
-from thehive4py.models import *
+from thehive4py.models import Alert, AlertArtifact, Case, CaseObservable, CaseTask, CaseTaskLog, CustomFieldHelper, CaseTemplate
 import settings
 
 def find_case_id(title, query, range, sort):
