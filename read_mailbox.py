@@ -30,6 +30,8 @@ def connect_mailbox(mailbox,imap_password,mail_folder,tag):
 
    num_emails = len(email_id[0].split())
 
+   email_message=""
+
    if num_emails>0:
      print(str(datetime.datetime.now())+"  Emails Collected from "+str(username)+":"+str(num_emails))
      for x in range(num_emails):

@@ -55,9 +55,9 @@ def readConfiguration(configfile):
         #Execute function to read the mailbox and return the email ids, number collected and actual emails
         num_emails, emails = read_mailbox.connect_mailbox(mailbox,password,folder,tag)
 
-        
         if num_emails>0:
             #Moved logic to here to process emails.
+            print(str(datetime.datetime.now())+"  Processing "+str(num_emails)+" emails.")
             process_emails.email_process(emails,tag,mailbox,password)
 
 def main(argv):

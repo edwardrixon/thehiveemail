@@ -2,17 +2,12 @@
 
 #This is used to process all of thre messages that we just retrieved
 
-#from __future__ import print_function
-#from __future__ import unicode_literals
-#from optparse import OptionParser
 from email.header import decode_header, make_header
 import modules
 import email
 import datetime
 import send_email
 import settings
-import create_alert
-#import mailparser
 
 def email_process(emails,tag,mailbox,password):
      #raw_email = mailparser.parse_from_string(emails)
