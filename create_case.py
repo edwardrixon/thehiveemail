@@ -59,7 +59,7 @@ def find_task_log_id(query):
                         full_task_id = item['id']
                         return full_task_id
                 else:
-                        print("I didn't find a History task!")
+                        print(str(datetime.datetime.now())+"  I didn't find a History task!")
 
     else:
         print('ko: {}/{}'.format(response.status_code, response.text))
@@ -87,7 +87,7 @@ def add_task_log(full_task_id,body,file_array):
         response = api.create_task_log(full_task_id,tasklog)
 
         if response.status_code == 201:
-    		print(json.dumps(response.json(), indent=4, sort_keys=True))
+    		#print(json.dumps(response.json(), indent=4, sort_keys=True))
     		print('')
     	else:
                 print('ko: {}/{}'.format(response.status_code, response.text))
