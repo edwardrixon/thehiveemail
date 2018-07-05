@@ -39,21 +39,21 @@ def email_process(emails,tag,mailbox,password):
         modules.process_autocase(email_message,subject,template_name,case_tag,alert_pri,email_from,email_to,mailbox,password)
         
     #Process messages tagged as spam. These will always create a case, extract attachments etc.
-        if tag=="spam":
-            print("you have hit the spam tag")
-            modules.spam(email_message,subject,email_from,email_to,mailbox,password)
+    elif tag=="spam":
+        print("you have hit the spam tag")
+        modules.spam(email_message,subject,email_from,email_to,mailbox,password)
 
     #Process messages tagged as security. This will call modules that determines what happens next based on search criteria
-        elif tag=="security":
-            #Process messages from the security mailbox. Case extractions depends on what the subject is etc
-            if "noreply@haveibeenpwned.com" in email_from and "multi-domain" not in subject:
-                modules.email_pwned(email_message,subject,email_from,email_to,mailbox,password) #
-            elif "domaintools.com" in email_from:
-                modules.brand_monitor(email_message,subject,email_from,email_to,mailbox,password)
-            else:
-                #If it gets to here unset the read flag (so we know whats been read but not processed) - NOT IMPLEMENTED YET
-                #result, email_data = mail.uid('store',latest_email_uid,'-FLAGS','\\Seen')
-                print("")
+    elif tag=="security":
+        #Process messages from the security mailbox. Case extractions depends on what the subject is etc
+        if "noreply@haveibeenpwned.com" in email_from and "multi-domain" not in subject:
+            modules.email_pwned(email_message,subject,email_from,email_to,mailbox,password) #
+        elif "domaintools.com" in email_from:
+            modules.brand_monitor(email_message,subject,email_from,email_to,mailbox,password)
+        else:
+            #If it gets to here unset the read flag (so we know whats been read but not processed) - NOT IMPLEMENTED YET
+            #result, email_data = mail.uid('store',latest_email_uid,'-FLAGS','\\Seen')
+            print("")
     else:
         print(str(datetime.datetime.now())+"  No TAGs have been applied to the email")
 
