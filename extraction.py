@@ -24,7 +24,8 @@ def linkParser(body):
             test=link.extract()
         elif(link.get('href').find('tel:') > -1):
             test=link.extract()
-        final_links.append(link)
+        else:
+            final_links.append(link)
 
 #   Working one
 #    links = [link['href'] for link in soup('a') if 'href' in link.attrs]
