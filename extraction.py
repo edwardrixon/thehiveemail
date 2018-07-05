@@ -17,17 +17,17 @@ def linkParser(body):
     links = soup.body('a')
 #    email = '
 #    phone = ''
-#    final_links = []
+    final_links = []
 
     for link in links:
         if(link.get('href').find('mailto:') > -1):
             test=link.extract()
             print("TEST VALUE-not mailto:",test)
-            #links.append(test)
+            final_links.append(test)
         elif(link.get('href').find('tel:') > -1):
             test=link.extract()
             print("TEST VALUE-not tel:",test)
-            #links.append(test)
+            final_links.append(test)
 
 #   Working one
 #    links = [link['href'] for link in soup('a') if 'href' in link.attrs]
