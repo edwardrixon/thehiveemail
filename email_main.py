@@ -48,7 +48,6 @@ def readConfiguration(configfile):
     settings.stored_remove_url_observables.append(remove_url_observables)
     settings.stored_remove_file_attachments.append(remove_file_attachments)
 
-
     i=0
 
     #I was lazy and put list of mailboxes to read in configuration file. Read them in here.

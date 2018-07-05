@@ -28,6 +28,7 @@ def email_process(emails,tag,mailbox,password):
     email_to = str(email.header.make_header(email.header.decode_header(email_message['To'])))
     subject = decode_header(email_message.get('subject'))[0][0]
 
+    print("This is the tag:"+tag)
     #If the email has the autocase trigger in it then regardless of which mailbox it came from.
     if str(update_tag) in str(subject):
         modules.update_autocase(email_message,subject) #run module to update an existing case.
@@ -39,6 +40,7 @@ def email_process(emails,tag,mailbox,password):
         
     #Process messages tagged as spam. These will always create a case, extract attachments etc.
         if tag=="spam":
+            print("you have hit the spam tag")
             modules.spam(email_message,subject,email_from,email_to,mailbox,password)
 
     #Process messages tagged as security. This will call modules that determines what happens next based on search criteria
