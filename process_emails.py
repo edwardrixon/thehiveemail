@@ -15,6 +15,8 @@ def email_process(emails,tag,mailbox,password):
     auto_create_tag=''.join(settings.stored_auto_create_tag[0])
     email_message = emails
 
+    print(str(update_tag))
+    print(str(auto_create_tag))
      #Extract the Date -Not used yet
      #date_tuple = email.utils.parsedate_tz(emails['Date'])
      #date_tuple = raw_email.date
@@ -29,9 +31,9 @@ def email_process(emails,tag,mailbox,password):
     subject = decode_header(email_message.get('subject'))[0]
 
      #If the email has the autocase trigger in it then regardless of which mailbox it came from.
-    if update_tag in subject:
+    if str(update_tag) in subject:
         modules.update_autocase(email_message,subject) #run module to update an existing case.
-    elif auto_create_tag in subject:
+    elif str(auto_create_tag) in subject:
         template_name="AUTOCASE"
         case_tag="Auto created general case"
         alert_pri = 1
