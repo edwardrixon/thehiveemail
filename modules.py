@@ -17,7 +17,7 @@ def spam(email_message,subject,email_from,email_to,mailbox,password):
     case_tag="spam"
     alert_pri = 1
     print(str(datetime.datetime.now())+"  Processing "+template_name+" with tag "+case_tag)
-    #process_autocase(email_message,subject,template_name,case_tag,alert_pri,email_from,email_to,mailbox,password)
+    process_autocase(email_message,subject,template_name,case_tag,alert_pri,email_from,email_to,mailbox,password)
 
 def brand_monitor(email_message,subject,email_from,email_to,mailbox,password):
     #This is to handle any alerts relating to brand monitoring in Domain Tools
