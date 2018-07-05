@@ -71,13 +71,13 @@ def process_autocase(email_message,subject,template_name,case_tag,alert_pri,emai
 
 #This will add a task to an existing case
 def update_autocase(email_message,subject):
-    update_tag=''.join(settings.stored_update_tag[0])
-    update_tag = "r'\\"+str(update_tag)+"(\w+)'"
+#    update_tag=''.join(settings.stored_update_tag[0])
+#    update_tag = "r'"+str(update_tag)+"(\w+)'"
 
     print(str(datetime.datetime.now())+"  Starting update of existing case.")
     
     #Create a search to find the hive case number
-    revised = re.search(update_tag, subject)  
+    revised = re.search(r'[HIVE-CASE#(\w+)', subject)  
 
     id = revised.group(1) #Extract the real case number
 
