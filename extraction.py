@@ -22,7 +22,8 @@ def linkParser(body):
 #        if(link.get('href').find('mailto:') > -1):
 #            final_links.append(link.extract())
 
-    links = [link['href'] for link in soup('a') if 'href' in link.attrs]    
+    links = [link['href'] for link in soup('a') if 'href' in link.attrs]
+
     print(str(datetime.datetime.now())+"  Urls Extracted:",links)
     return list(set(links))
 
@@ -40,7 +41,7 @@ def extractattachments(message):
     attachment_location=''.join(settings.stored_attachment_location[0])
     print(str(datetime.datetime.now())+"  Starting attachment extraction.") 
     pathList=""
-    
+
     if message.is_multipart():
       
         pathList = []
@@ -147,10 +148,16 @@ def process_html(part):
 
 def html_observables(part):
    body = part.get_payload(decode=True)
-   print("Running the url parser")
+   print(str(datetime.datetime.now())+"  Running the url parser.")
    url_array=linkParser(body)
-   print("Running the email parser")
+   print(str(datetime.datetime.now())+"  Running the email parser.")
    mail_array=emailParser(body)
+
+   #This bit will now clean up the observables we dont care about.
+   #Read in the skip this stuff
+   #Read in the url array and mail_array and skip everythin not required
+   #Pack whats left into the array and then return that
+
    return url_array, mail_array
 
 def fix_html_body(charset,body):
