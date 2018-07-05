@@ -26,7 +26,11 @@ def readConfiguration(configfile):
     default_recipient = config['INTERNAL_EMAIL']['default_recipient'] #A default email recipient that will recieve emails
     security_recipients = config['INTERNAL_EMAIL']['security_team'] #The list of recipients in the Security team to recieve emails
     email_tag_line = config['INTERNAL_EMAIL']['email_tag_line'] #Standard message that will be included in each email.
-    remove_observables = config['OBSERVABLES']['remove_observables'] #List of observables to be ignored i.e. your internal email addressess and domains
+    remove_email_observables = config['OBSERVABLES']['remove_email_observables'] #List of observables to be ignored i.e. your internal email addressess and domains
+    remove_file_observables = config['OBSERVABLES']['remove_file_observables'] #List of observables to be ignored i.e. your internal email addressess and domains
+    remove_url_observables = config['OBSERVABLES']['remove_url_observables'] #List of observables to be ignored i.e. your internal email addressess and domains
+    remove_file_attachments = config['OBSERVABLES']['remove_file_attachments'] #List of observables to be ignored i.e. your internal email addressess and domains
+
 
     #Store all of these variables in settings.py so that they can be used for all modules and python programs.
     settings.stored_hive_address.append(hive_address)
@@ -39,7 +43,11 @@ def readConfiguration(configfile):
     settings.stored_def_recipient.append(default_recipient)
     settings.stored_security_recipients.append(security_recipients)
     settings.stored_email_tag_line.append(email_tag_line)
-    settings.stored_remove_observables.append(remove_observables)
+    settings.stored_remove_email_observables.append(remove_email_observables)
+    settings.stored_remove_file_observables.append(remove_file_observables)
+    settings.stored_remove_url_observables.append(remove_url_observables)
+    settings.stored_remove_file_attachments.append(remove_file_attachments)
+
 
     i=0
 
