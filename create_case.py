@@ -88,7 +88,7 @@ def add_task_log(full_task_id,body,file_array):
 
         if response.status_code == 201:
     		#print(json.dumps(response.json(), indent=4, sort_keys=True))
-                print('str(datetime.datetime.now())+"  Observable succesfully created.")
+                print(str(datetime.datetime.now())+"  Task Log succesfully created.")
     	else:
                 print('ko: {}/{}'.format(response.status_code, response.text))
     		sys.exit(0)
