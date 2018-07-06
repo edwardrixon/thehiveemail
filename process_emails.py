@@ -49,11 +49,9 @@ def email_process(emails,tag,mailbox,password):
             modules.email_pwned(email_message,subject,email_from,email_to,mailbox,password) #
         elif "domaintools.com" in email_from:
             modules.brand_monitor(email_message,subject,email_from,email_to,mailbox,password)
-        else:
-            #If it gets to here unset the read flag (so we know whats been read but not processed) - NOT IMPLEMENTED YET
-            result, email_data = mail.uid('store',latest_email_uid,'-FLAGS','\\Seen')
-            print("")
     else:
+        #If it gets to here unset the read flag (so we know whats been read but not processed) - NOT IMPLEMENTED YET
+        result, email_data = email.uid('store',latest_email_uid,'-FLAGS','\\Seen')
         print(str(datetime.datetime.now())+"  No TAGs have been applied to the email")
 
 
