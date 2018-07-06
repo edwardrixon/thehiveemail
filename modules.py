@@ -84,11 +84,13 @@ def update_autocase(email_message,subject):
     print(str(datetime.datetime.now())+"  Case number:"+id+" Extracted.")
     body, url_array, mail_array = extraction.extractbody(email_message)
     print(str(datetime.datetime.now())+"  Extracting attachments")
+    full_task_id,full_case_id = create_case.search_case(id)
     file_array = extraction.extractattachments(email_message)
-    create_case.prepare_mail_observable(id, mail_array)
-    create_case.prepare_url_observable(id, url_array)
-    create_case.prepare_file_observable(id, file_array)
+
+    create_case.prepare_mail_observable(full_case_id, mail_array)
+    create_case.prepare_url_observable(full_case_id, url_array)
+    create_case.prepare_file_observable(full_case_id, file_array)
     #We need to add something to the task called History that we have setup
-    full_task_id = create_case.search_case(id,body,file_array)
+    print("Searching for case:"+id)
     create_case.add_task_log(full_task_id,body,file_array)
 
