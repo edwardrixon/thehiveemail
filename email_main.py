@@ -49,7 +49,7 @@ def readConfiguration(configfile):
     settings.stored_remove_file_attachments.append(remove_file_attachments)
 
     i=0
-
+   
     #I was lazy and put list of mailboxes to read in configuration file. Read them in here.
     for i in range(0,3):
         mailbox=("mailbox{0}".format(i))
