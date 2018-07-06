@@ -53,8 +53,6 @@ def find_task_log_id(query):
         test = json.dumps(response.json(), indent=4, sort_keys=True)
         resp = json.loads(test)
         
-        print(resp)
-
         #I now need to search for a task called History
         for item in resp:
                 if item['title'] == 'History':
@@ -90,17 +88,15 @@ def add_task_log(full_task_id,body,file_array):
 
         if response.status_code == 201:
     		#print(json.dumps(response.json(), indent=4, sort_keys=True))
-    		print('')
+                print('str(datetime.datetime.now())+"  Observable succesfully created.")
     	else:
                 print('ko: {}/{}'.format(response.status_code, response.text))
     		sys.exit(0)
 
 def search_case(case_id):
-        print("In the search now and searching for:"+case_id)
         full_case_id = find_case_id("CaseSearchQuery", Eq('caseId', case_id), 'all', [])
-        print("I found this full_case_id:",full_case_id)
         full_task_id = find_task_log_id(full_case_id)
-        print("I found this full task log id:",full_task_id)
+
         return full_task_id, full_case_id
 
 
@@ -146,7 +142,7 @@ def prepare_case_template(subject,indicatorlevel,emailbody,casetype,tag,template
 	response = api.get_case(id)
 	if response.status_code == requests.codes.ok:
 #    		print(json.dumps(response.json(), indent=4, sort_keys=True))
-    		print('')
+                print('str(datetime.datetime.now())+"  Observable succesfully created.")
                 
 	else:
 		print('ko: {}/{}'.format(response.status_code, response.text))
@@ -174,9 +170,9 @@ def prepare_mail_observable(id,mail_array):
 
       if response.status_code == 201:
 #         print(json.dumps(response.json(), indent=4, sort_keys=True))
-         print('')
+         print('str(datetime.datetime.now())+"  Observable succesfully created.")
       elif response.status_code == 400:
-	 print("Email Observable already exists")
+	 print('str(datetime.datetime.now())+"  Email Observable already exists")
       else:
          print(str(datetime.datetime.now())+"  Error creating Email Observables.")
          print('ko: {}/{}'.format(response.status_code, response.text))
@@ -203,9 +199,9 @@ def prepare_url_observable(id,url_array):
 
       if response.status_code == 201:
 #         print(json.dumps(response.json(), indent=4, sort_keys=True))
-         print('')
+         print('str(datetime.datetime.now())+"  Observable succesfully created.")
       elif response.status_code == 400:
-	 print("URL Observable already exists") 
+	 print('str(datetime.datetime.now())+"  URL Observable already exists") 
       else:
          print(str(datetime.datetime.now())+"  Error creating URL Observables.")
          print('ko: {}/{}'.format(response.status_code, response.text))
@@ -234,9 +230,9 @@ def prepare_subject_observable(id,subject):
 
    if response.status_code == 201:
 #      print(json.dumps(response.json(), indent=4, sort_keys=True))
-      print('')
+      print('str(datetime.datetime.now())+"  Observable succesfully created.")
    elif response.status.code == 400:
-      print("Subject Observable already exists")
+      print('str(datetime.datetime.now())+"  Subject Observable already exists")
    else:
       print(str(datetime.datetime.now())+"  Error creating Subject Observables.")
       print('ko: {}/{}'.format(response.status_code, response.text))
@@ -267,9 +263,9 @@ def prepare_file_observable(id,file_array):
 
       if response.status_code == 201:
 #         print(json.dumps(response.json(), indent=4, sort_keys=True))
-         print('')
+         print('str(datetime.datetime.now())+"  Observable succesfully created.")      
       elif response.status_code == 400:
-         print("Attachment already exists")
+         print('str(datetime.datetime.now())+"  Attachment already exists")
       else:
          print(str(datetime.datetime.now())+"  Error creating URL Observables.")
          print('ko: {}/{}'.format(response.status_code, response.text))
