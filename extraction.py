@@ -65,20 +65,6 @@ def linkParser(body,test_type):
     final_links=process_observables(temp_link,test_type)
     return list(set(final_links))
 
-#def emailParser(body):
-#    test_type="email"
-#    remove_observables = ''.join(settings.stored_remove_email_observables[0])
-#    soup = BeautifulSoup(body, "lxml")
-#    mailtos = soup.select('a[href^=mailto]')
-#    emails = []
-#
-   # for i in mailtos:
-   #     if i.string != None:
-   #         emails.append(i.string.encode('utf-8').strip())
-   #
-    #final_links=process_observables(emails,test_type)
-    #return list(set(emails))
-
 def extractattachments(message):
     attachment_location=''.join(settings.stored_attachment_location[0])
     remove_observables = ''.join(settings.stored_remove_file_attachments[0])
