@@ -10,35 +10,79 @@ import html2text
 import datetime
 import chardet
 import settings
+import sys
 
-def linkParser(body):
+def process_observables(test_item,test_type):
+
+    if test_type=="url":
+	remove_observables=settings.stored_remove_url_observables
+    elif test_type=="email":
+	remove_observables=settings.stored_remove_email_observables
+    elif test_type=="file":
+        remove_observables=settings.stored_remove_file_observables
+    elif test_type=="attachments":
+	remove_observables=settings.stored_remove_file_attachments
+    else:
+	print(str(datetime.datetime.now())+"  Incorrect test type passed through:"+test_type)
+    
+    final_items=[]
+
+    #Now to go through and remove any that are to be ignored
+    for link in test_item:
+        i=0
+        for i in range(len(remove_observables)+1):
+                if remove_observables[0][i] not in link:
+                        final_items.append(link)
+                else:
+                        break
+
+    print(str(datetime.datetime.now())+"  Items Extracted:",final_items)
+    return list(set(final_items))
+
+
+
+def linkParser(body,test_type):
     soup = BeautifulSoup(body, "lxml")
-    links = soup.body('a')
-#    email = '
-#    phone = ''
-#    final_links = []
 
-#    for link in links:
-#        if(link.get('href').find('mailto:') > -1):
-#            final_links.append(link.extract())
+    temp_link = []
+    final_links = []
+    email_links = []
 
-    links = [link['href'] for link in soup('a') if 'href' in link.attrs]
+    #Use the test type to determine which data to keep from the html either 'email' or 'url'
 
-    print(str(datetime.datetime.now())+"  Urls Extracted:",links)
-    return list(set(links))
+    for link in soup.find_all('a',href=True):
+	url=link['href']
 
-def emailParser(body):
-    soup = BeautifulSoup(body, "lxml")
-    mailtos = soup.select('a[href^=mailto]')
-    emails = []
+        if(url.find('mailto:') > -1):
+    	    if test_type=="email":
+            	temp_link.append(url)
+        #elif(url.find('tel:') > -1):
+        else:
+            if test_type=="url":
+		temp_link.append(url)
 
-    for i in mailtos:
-        if i.string != None:
-            emails.append(i.string.encode('utf-8').strip())
-    return list(set(emails))
+
+    final_links=process_observables(temp_link,test_type)
+    return list(set(final_links))
+
+#def emailParser(body):
+#    test_type="email"
+#    remove_observables = ''.join(settings.stored_remove_email_observables[0])
+#    soup = BeautifulSoup(body, "lxml")
+#    mailtos = soup.select('a[href^=mailto]')
+#    emails = []
+#
+   # for i in mailtos:
+   #     if i.string != None:
+   #         emails.append(i.string.encode('utf-8').strip())
+   #
+    #final_links=process_observables(emails,test_type)
+    #return list(set(emails))
 
 def extractattachments(message):
     attachment_location=''.join(settings.stored_attachment_location[0])
+    remove_observables = ''.join(settings.stored_remove_file_attachments[0])
+
     print(str(datetime.datetime.now())+"  Starting attachment extraction.") 
     pathList=""
 
@@ -146,19 +190,20 @@ def process_html(part):
    body = fix_html_body(charset,body)
    return body
 
+       
 def html_observables(part):
-   body = part.get_payload(decode=True)
-   print(str(datetime.datetime.now())+"  Running the url parser.")
-   url_array=linkParser(body)
-   print(str(datetime.datetime.now())+"  Running the email parser.")
-   mail_array=emailParser(body)
+    #Read in the list of observables
 
-   #This bit will now clean up the observables we dont care about.
-   #Read in the skip this stuff
-   #Read in the url array and mail_array and skip everythin not required
-   #Pack whats left into the array and then return that
+    body = part.get_payload(decode=True)
+    print(str(datetime.datetime.now())+"  Running the url parser.")
+    url_array=linkParser(body,"url")
+    print(str(datetime.datetime.now())+"  Url items Extracted:",url_array)
+    print(str(datetime.datetime.now())+"  Running the email parser.")
+    mail_array=linkParser(body,"email")
+    print(str(datetime.datetime.now())+"  Email items Extracted:",mail_array)
+    #sys.exit(0)
 
-   return url_array, mail_array
+    return url_array, mail_array
 
 def fix_html_body(charset,body):
    h = html2text.HTML2Text()

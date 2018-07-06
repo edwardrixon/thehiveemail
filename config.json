@@ -29,7 +29,10 @@
         "search1":["'noreply@haveibeenpwned.com' in email_from and 'tester' not in subject","feed_monitor","Feed Alert","THREAT CASE","1","Alert from feeds@ alert system","Y"]
     },
     "OBSERVABLES":{
-        "remove_observables":["@test.local","@provider.local"]
+        "remove_email_observables":["@test.local","@provider.local"],
+        "remove_url_observables":["test.local","provider.local"],
+        "remove_file_observables":["file.png"],
+        "remove_file_attachments":["image.png"]
     }
 
 }
