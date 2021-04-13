@@ -25,3 +25,36 @@ AutoCase Updates:
 
 Does other stuff like filtering out your own defined observables, changing tag lines etc etc.
 
+The File Structure is as follows;
+
+- config.json 
+ * Where you set up the mailbox's you wish to monitor and generate cases or alerts on.
+ * Where you set up the internal email address settings that are used in other modules for sending emails to end users.
+ * Location Attachments should be stored within the hive
+ * The Hive Connection Details for connecting to the hive instance including api key
+ * What the autocreate tag should be within the hive to detect that this is an auto-generated case or alert.
+ * What new tag gets assigned when a case or alert is updated.
+ * Search Attributes that will determine what modules are run based on certain criteria of the emails within the inbox and what is generated, an alert or a case.
+ * Observables that should be removed from each case, You would want to remove the mailbox itselfs email so that all your cases don't correlate on this.
+
+- settings.py
+This is used purely to store the contents of the configuration file in memory so that all modules can access these variables
+ * stored_hive_address=[] - Location of The Hive Instance.
+ * stored_api_key=[] - API Key of The Hive.
+ * stored_attachment_location=[] - Location Attachments should be stored once processed.
+ * stored_auto_create_tag=[] - What tag is assigned to an alert or case generated using this script.
+ * stored_update_tag=[] - What tag is assigned to an alert or case that is UPDATED using this script.
+ * stored_internal_email=[] - The Internal email that will be used for email corrospendence.
+ * stored_own_domain=[] - The domain of our own email addresses.
+ * stored_def_recipient=[] - The user that recieves a copy of all emails.
+ * stored_security_recipients=[]
+ * stored_email_tag_line=[]
+ * stored_remove_email_observables=[]
+ * stored_remove_file_observables=[]
+ * stored_remove_url_observables=[]
+ * stored_remove_file_attachments=[]
+
+- create_alert.py
+This python script utilises the stored hive address and stored hive api key within the settings file to create a new case. It utilises thehiveAPI module to create an alert in the hive.
+
+- 
