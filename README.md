@@ -25,7 +25,7 @@ AutoCase Updates:
 
 Does other stuff like filtering out your own defined observables, changing tag lines etc etc.
 
-##The File Structure is as follows;
+## The File Structure is as follows;
 
 * config.json 
  * Where you set up the mailbox's you wish to monitor and generate cases or alerts on.
