@@ -7,4 +7,3 @@ html2text
 bs4
 HTMLParser
 imaplib
-

@@ -1,4 +1,4 @@
-# thehiveemail
+# TheHiveEmail
 System that is used primarily to read from a defined set of mailboxes and based upon content that is defined by the administrator these are extracted and then cases are automatically created in the hive (if required).
 
 Primarily does the following:
@@ -27,7 +27,7 @@ Does other stuff like filtering out your own defined observables, changing tag l
 
 ## The File Structure is as follows;
 
-* config.json 
+### config.json 
  * Where you set up the mailbox's you wish to monitor and generate cases or alerts on.
  * Where you set up the internal email address settings that are used in other modules for sending emails to end users.
  * Location Attachments should be stored within the hive
@@ -37,7 +37,7 @@ Does other stuff like filtering out your own defined observables, changing tag l
  * Search Attributes that will determine what modules are run based on certain criteria of the emails within the inbox and what is generated, an alert or a case.
  * Observables that should be removed from each case, You would want to remove the mailbox itselfs email so that all your cases don't correlate on this.
 
-* settings.py
+### settings.py
 This is used purely to store the contents of the configuration file in memory so that all modules can access these variables
  * stored_hive_address=[] - Location of The Hive Instance.
  * stored_api_key=[] - API Key of The Hive.
@@ -54,7 +54,7 @@ This is used purely to store the contents of the configuration file in memory so
  * stored_remove_url_observables=[]
  * stored_remove_file_attachments=[]
 
-* create_alert.py
+### create_alert.py
 This python script utilises the stored hive address and stored hive api key within the settings file to create a new case. It utilises thehiveAPI module to create an alert in the hive.
 
 * 
