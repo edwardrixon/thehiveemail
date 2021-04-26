@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from bs4 import BeautifulSoup
-import HTMLParser
+import html.parser
 import quopri
 import mailbox
 import os
@@ -23,7 +23,7 @@ def process_observables(test_item,test_type):
     elif test_type=="attachments":
 	remove_observables=settings.stored_remove_file_attachments
     else:
-	print(str(datetime.datetime.now())+"  Incorrect test type passed through:"+test_type)
+	print((str(datetime.datetime.now())+"  Incorrect test type passed through:"+test_type))
     
     final_items=[]
 
@@ -36,7 +36,7 @@ def process_observables(test_item,test_type):
                 else:
                         break
 
-    print(str(datetime.datetime.now())+"  Items Extracted:",final_items)
+    print((str(datetime.datetime.now())+"  Items Extracted:",final_items))
     return list(set(final_items))
 
 
@@ -69,7 +69,7 @@ def extractattachments(message):
     attachment_location=''.join(settings.stored_attachment_location[0])
     remove_observables = ''.join(settings.stored_remove_file_attachments[0])
 
-    print(str(datetime.datetime.now())+"  Starting attachment extraction.") 
+    print((str(datetime.datetime.now())+"  Starting attachment extraction.")) 
     pathList=""
 
     if message.is_multipart():
@@ -81,7 +81,7 @@ def extractattachments(message):
                 if part.get_content_maintype() == 'multipart': 
                     save_path = attachment_location
                     filename = part.get_filename()
-                    print(str(datetime.datetime.now())+"  Extracting File:"+str(filename))
+                    print((str(datetime.datetime.now())+"  Extracting File:"+str(filename)))
                     completePath = os.path.join(save_path, filename)
                     pathList.append(completePath)
 #                   print (completePath)
@@ -103,31 +103,31 @@ def extractbody(email_message):
 
 ################################################################################################################
     if email_message.is_multipart():
-       print(str(datetime.datetime.now())+"  Multipart message detected.")
+       print((str(datetime.datetime.now())+"  Multipart message detected."))
 
        url_array=""
        mail_array=""
 
        body = []
        for part in email_message.walk():
-          print(str(datetime.datetime.now())+"  Content type is "+str(part.get('Content-Disposition')))
-          print(str(datetime.datetime.now())+"  Main Email type detected as "+part.get_content_type())
+          print((str(datetime.datetime.now())+"  Content type is "+str(part.get('Content-Disposition'))))
+          print((str(datetime.datetime.now())+"  Main Email type detected as "+part.get_content_type()))
           if part.get_content_charset() is None: 
     
             charset = chardet.detect(str(part))['encoding']
-            print(str(datetime.datetime.now())+"  Content charset detected as "+charset)
+            print((str(datetime.datetime.now())+"  Content charset detected as "+charset))
             
           else:
             charset = part.get_content_charset()
-            print(str(datetime.datetime.now())+"  Content charset detected as "+charset)
+            print((str(datetime.datetime.now())+"  Content charset detected as "+charset))
 
           if part.get_content_maintype() == 'multipart': 
-            print(str(datetime.datetime.now())+"  Multipart email is type "+part.get_content_type())
+            print((str(datetime.datetime.now())+"  Multipart email is type "+part.get_content_type()))
             
             continue
           #print(str(datetime.datetime.now())+"  Email type detected as "+part.get_content_type())
           if part.get_content_type() == "text/html" and 'attachment' not in str(part.get('Content-Disposition')):
-             print (str(datetime.datetime.now())+"  Extracting text/html body.")
+             print((str(datetime.datetime.now())+"  Extracting text/html body."))
              
              #This will build the array for a multipart message
              if 'attachment' not in str(part.get('Content-Disposition')):
@@ -135,14 +135,14 @@ def extractbody(email_message):
              url_array, mail_array = html_observables(part)
 #             body = u''.join((body)).encode('utf-8').strip()
           elif part.get_content_type() == "text/plain" and 'attachment' not in str(part.get('Content-Disposition')):
-             print (str(datetime.datetime.now())+"  Extracting text/plain body.") 
+             print((str(datetime.datetime.now())+"  Extracting text/plain body.")) 
              body.append(part.get_payload(decode=True))
 
     else:
-       print(str(datetime.datetime.now())+"  Single (non-multipart) message detected.")
+       print((str(datetime.datetime.now())+"  Single (non-multipart) message detected."))
 
        if email_message.get_content_type() == "text/html":
-           print (str(datetime.datetime.now())+"  Extracting text/html body.") 
+           print((str(datetime.datetime.now())+"  Extracting text/html body.")) 
            if 'attachment' not in str(email_message.get('Content-Disposition')):
               body=process_html(email_message)
            else:
@@ -150,7 +150,7 @@ def extractbody(email_message):
            url_array, mail_array = html_observables(email_message)
 
        elif email_message.get_content_type() == "text/plain":
-           print (str(datetime.datetime.now())+"  Extracting text/plain body.")
+           print((str(datetime.datetime.now())+"  Extracting text/plain body."))
            if 'attachment' not in str(email_message.get('Content-Disposition')):
               body = email_message.get_payload(decode=True)
            else:
@@ -181,12 +181,12 @@ def html_observables(part):
     #Read in the list of observables
 
     body = part.get_payload(decode=True)
-    print(str(datetime.datetime.now())+"  Running the url parser.")
+    print((str(datetime.datetime.now())+"  Running the url parser."))
     url_array=linkParser(body,"url")
-    print(str(datetime.datetime.now())+"  Url items Extracted:",url_array)
-    print(str(datetime.datetime.now())+"  Running the email parser.")
+    print((str(datetime.datetime.now())+"  Url items Extracted:",url_array))
+    print((str(datetime.datetime.now())+"  Running the email parser."))
     mail_array=linkParser(body,"email")
-    print(str(datetime.datetime.now())+"  Email items Extracted:",mail_array)
+    print((str(datetime.datetime.now())+"  Email items Extracted:",mail_array))
     #sys.exit(0)
 
     return url_array, mail_array

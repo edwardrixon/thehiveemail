@@ -28,7 +28,7 @@ def email_process(emails,tag,mailbox,password):
     email_to = str(email.header.make_header(email.header.decode_header(email_message['To'])))
     subject = decode_header(email_message.get('subject'))[0][0]
 
-    print("This is the tag:"+tag)
+    print(("This is the tag:"+tag))
     #If the email has the autocase trigger in it then regardless of which mailbox it came from.
     if str(update_tag) in str(subject):
         modules.update_autocase(email_message,subject) #run module to update an existing case.
@@ -52,6 +52,6 @@ def email_process(emails,tag,mailbox,password):
     else:
         #If it gets to here unset the read flag (so we know whats been read but not processed) - NOT IMPLEMENTED YET
         result, email_data = email.uid('store',latest_email_uid,'-FLAGS','\\Seen')
-        print(str(datetime.datetime.now())+"  No TAGs have been applied to the email")
+        print((str(datetime.datetime.now())+"  No TAGs have been applied to the email"))
 
 

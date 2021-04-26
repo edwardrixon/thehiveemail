@@ -12,7 +12,7 @@ def readConfiguration(configfile):
     try:
 		config = json.loads(open(configfile).read())
     except IOError:
-        print(str(datetime.datetime.now())+"  ERROR: Failed to read in the ",configfile," file.")
+        print((str(datetime.datetime.now())+"  ERROR: Failed to read in the ",configfile," file."))
         sys.exit()
 
     #Read in the configuration file.
@@ -64,7 +64,7 @@ def readConfiguration(configfile):
 
         if num_emails>0:
             #Moved logic to here to process emails.
-            print(str(datetime.datetime.now())+"  Processing "+str(num_emails)+" emails.")
+            print((str(datetime.datetime.now())+"  Processing "+str(num_emails)+" emails."))
             process_emails.email_process(emails,tag,mailbox,password)
 
 def main(argv):

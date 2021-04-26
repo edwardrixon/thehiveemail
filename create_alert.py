@@ -19,7 +19,7 @@ def prepare_alert(subject,indicatorlevel,emailbody,alerttype,tag):
  
     # Prepare the sample Alert
 	
-    print("Preparing the alert for", alerttype)
+    print(("Preparing the alert for", alerttype))
     sourceRef = str(uuid.uuid4())[0:6]
     alert = Alert(title=subject,
         	tlp=indicatorlevel,
@@ -46,7 +46,7 @@ def prepare_alert(subject,indicatorlevel,emailbody,alerttype,tag):
     		sys.exit(0)
 
 	# Get all the details of the created alert
-    print('Get created alert {}'.format(id))
+    print(('Get created alert {}'.format(id)))
     print('-----------------------------')
     response = api.get_alert(id)
     if response.status_code == requests.codes.ok:
@@ -54,7 +54,7 @@ def prepare_alert(subject,indicatorlevel,emailbody,alerttype,tag):
     		print('')
     else:
                 print("Error retreiving the alert!")
-		print('ko: {}/{}'.format(response.status_code, response.text))
+		print(('ko: {}/{}'.format(response.status_code, response.text)))
 
 
 def skip_email():
