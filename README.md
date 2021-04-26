@@ -1,3 +1,4 @@
+[![Python application](https://github.com/edwardrixon/thehiveemail/actions/workflows/python-app.yml/badge.svg)](https://github.com/edwardrixon/thehiveemail/actions/workflows/python-app.yml)
 # TheHiveEmail
 System that is used primarily to read from a defined set of mailboxes and based upon content that is defined by the administrator these are extracted and then cases are automatically created in the hive (if required).
 
