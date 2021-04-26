@@ -25,6 +25,9 @@ AutoCase Updates:
 
 Does other stuff like filtering out your own defined observables, changing tag lines etc etc.
 
+## Installiation ##
+[INSTALL.md](Installion Guide)
+
 ## The File Structure is as follows;
 
 ### config.json 
