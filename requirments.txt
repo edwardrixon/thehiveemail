@@ -1,0 +1,10 @@
+mailbox
+requests
+uuid
+thehive4py
+imap
+html2text
+bs4
+HTMLParser
+imaplib
+
